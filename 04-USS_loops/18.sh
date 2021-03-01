@@ -50,11 +50,14 @@ EOF
 	esac
 done
 
-sleep $TIME2 &
-PID1=$!
-echo "Job [ $PID1 ] is sleeping for $TIME2 second(s)"
+V_ARRAY=( )
 
-V_ARRAY=( $PID1 )
+# дополнительный процессс с заданным временем для тестов
+#sleep $TIME2 &
+#PID1=$!
+#echo "Job [ $PID1 ] is sleeping for $TIME2 second(s)"
+#
+#V_ARRAY=( $PID1 )
 
 for V_ITER in $(seq $JOBS); do
 	TIME=$RANDOM
