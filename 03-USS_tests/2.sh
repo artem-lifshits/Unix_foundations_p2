@@ -1,4 +1,5 @@
 #!/bin/bash
+
 FILE=$1
 EMAIL=$2
 NAME="$(basename ${FILE})"
