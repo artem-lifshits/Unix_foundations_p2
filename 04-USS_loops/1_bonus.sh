@@ -1,16 +1,18 @@
 #!/bin/bash
 
+ARRAY=( d default t timedout f failed )
+
 while [[ $# -gt 1 ]]; do
 	case "$1" in
 		"-s")
 		  shift
-			if [ "$1" == "default" ] || [ "$1" == "d" ]; then
+			if [ "$1" == "${ARRAY[0]}" ] || [ "$1" == "${ARRAY[1]}" ]; then
 				echo "Using sorting mode: default"
 				exit 0
-			elif [ "$2" == "timedout" ] || [ "$1" == "t" ]; then
+			elif [ "$2" == "${ARRAY[2]}" ] || [ "$1" == "${ARRAY[3]}" ]; then
 				echo "Using sorting mode: timedout"
 				exit 0
-			elif [ "$1" == "failed" ] || [ "$1" == "f" ]; then
+			elif [ "$1" == "${ARRAY[4]}" ] || [ "$1" == "${ARRAY[5]}" ]; then
 				echo "Using sorting mode: failed"
 				exit 0
 			else
@@ -24,23 +26,23 @@ while [[ $# -gt 1 ]]; do
 done
 
 echo "Enter the sorting mode:"
-echo "        (d)default"
-echo "        (f)failed"
-echo "        (t)timedout"
+echo "        (${ARRAY[0]})${ARRAY[1]}"
+echo "        (${ARRAY[2]})${ARRAY[3]}"
+echo "        (${ARRAY[4]})${ARRAY[5]}"
 
 
 for TRY in {1..3}; do
 	read -p ""
 	case "${REPLY}" in
-		"d" | "default")
+		"${ARRAY[0]}" | "${ARRAY[1]}")
 			echo "Using sorting mode: default"
 			exit 0
 			;;
-		"t" | "timedout")
+		"${ARRAY[2]}" | "${ARRAY[3]}")
 			echo "Using sorting mode: timedout"
 			exit 0
 			;;
-		"f" | "failed")
+		"${ARRAY[4]}" | "${ARRAY[5]}")
 			echo "Using sorting mode: failed"
 			exit 0
 			;;
