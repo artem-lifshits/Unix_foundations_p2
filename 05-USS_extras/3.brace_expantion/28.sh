@@ -1,6 +1,9 @@
 #!/bin/bash
 DIR="${HOME}/UNIX_2_Data/logs"
-echo ${DIR}
+
+#echo ${DIR}
+#ls -l ${DIR}/*_{srv01,srv02,srv03}.{access,error}.log
+
 mkdir ${DIR}/{srv01,srv02,srv03} 2>/dev/null
 for FILE in ${DIR}/*_{srv01,srv02,srv03}.{access,error}.log; do
   NAME="$(basename ${FILE})"
