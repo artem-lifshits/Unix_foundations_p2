@@ -15,5 +15,4 @@ else
 		touch ${FILE}
 		sleep 20
 fi
-
 rm "${FILE}"

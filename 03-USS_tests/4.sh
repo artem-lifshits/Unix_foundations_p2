@@ -13,7 +13,7 @@ if [ -s "${FILE}" ]; then
   echo "Last PID is: ${LAST_PID}"
 fi
 
-if [ -e /proc/${LAST_PID} -a /proc/${LAST_PID}/exe ]; then
+if ps -p ${LAST_PID} > /dev/null; then
   echo "Proccess is still running, please try again later"
   exit 0
 elif [ -s "${FILE}" ]; then
