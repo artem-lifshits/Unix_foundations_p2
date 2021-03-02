@@ -2,45 +2,60 @@
 E_ILLEGAL_CALL=255
 
 Max() {
-  MY_ARRAY=( "$@" )
-  FILE_NAME=""
-
-  if [ -z "${MY_ARRAY[0]}" ] || [ -z "${MY_ARRAY[0]}" ] || [ "${#MY_ARRAY[@]}" -eq "0" ]; then
-	  echo "Couldn't get the necessary data"
+	if [ -z "$1" ] || [ ! -e "$1" ]; then
+	  CHECK="fail"
 	  return ${E_ILLEGAL_CALL}
   fi
+  LENGTH="$(wc -l < $1)"
+}
 
-  FILE_PATH="${MY_ARRAY[0]}"
-  LENGTH="$(wc -l < ${FILE_PATH})"
+Compare() {
 
-  while [ "${#MY_ARRAY[@]}" -gt "1" ]; do
+  Max $1
+  LENGTH1=${LENGTH}
 
-    FILE_PATH1="${MY_ARRAY[1]}"
+  Max $2
+  LENGTH2=${LENGTH}
 
-    if [ -z "${FILE_PATH1}" ] || [ ! -e "${FILE_PATH1}" ]; then
-      echo "Couldn't get the necessary data"
-      return ${E_ILLEGAL_CALL}
-    fi
+  if [ "${CHECK}" == "fail" ]; then
+    return ${E_ILLEGAL_CALL}
+  fi
 
-    LENGTH1="$(wc -l < ${FILE_PATH1})"
+  MAXIMUM="${LENGTH1}"
+  FILE_PATH=$1
 
-    if [[ ${LENGTH1} -gt ${LENGTH} ]]; then
-      LENGTH="${LENGTH1}"
-      FILE_PATH="${FILE_PATH1}"
-    fi
-    MY_ARRAY=("${MY_ARRAY[@]:1}")
+	if [[ ${LENGTH2} -gt ${LENGTH1} ]]; then
+		MAXIMUM="${LENGTH2}"
+		FILE_PATH=$2
+	fi
+}
 
+Compare_all() {
+  CHECK='true'
+  MY_ARRAY=( "$@" )
+  MAX_NAME=${MY_ARRAY[0]}
+  unset MY_ARRAY[0]
+  EN=${#MY_ARRAY[@]}
+  for V_INT in $(seq 1 ${EN}); do
+    Compare "${MAX_NAME}" "${MY_ARRAY[${V_INT}]}"
+    MAX_NAME="${FILE_PATH}"
+    MAX_LENGTH="${MAXIMUM}"
   done
 
-  FILE_NAME="$(basename ${FILE_PATH})"
-  echo "The longest file is: ${FILE_NAME} (${LENGTH} line(s))"
+  if [ "${CHECK}" == "fail" ]; then
+    echo "Some file doesn't exist"
+    return ${E_ILLEGAL_CALL}
+  fi
+
+  FILE_NAME="$(basename ${MAX_NAME})"
+  echo "The longest file is: ${FILE_NAME} (${MAX_LENGTH} line(s))"
 
 }
 
-Max materials/files_to_compare/1 materials/files_to_compare/1 materials/files_to_compare/6 materials/files_to_compare/3 materials/files_to_compare/3
-echo "Return code is $?"
-echo "${FILE_NAME}"
+Compare_all materials/files_to_compare/1 materials/files_to_compare/1 materials/files_to_compare/6 materials/files_to_compare/3 materials/files_to_compare/3
 
-Max materials/files_to_compare/4 materials/files_to_compare/1 materials/files_to_compare/2 materials/files_to_compare/3 materials/files_to_compare/5
-echo "Return code is $?"
-echo "${FILE_NAME}"
+Compare_all materials/files_to_compare/4 materials/files_to_compare/1 materials/files_to_compare/3 materials/files_to_compare/5 nonexistent
+
+Compare_all materials/files_to_compare/4 materials/files_to_compare/1 materials/files_to_compare/2 materials/files_to_compare/3 materials/files_to_compare/5
+
+Compare_all materials/files_to_compare/4 materials/files_to_compare/1 materials/files_to_compare/2 materials/files_to_compare/3 materials/files_to_compare/5 nonexistent

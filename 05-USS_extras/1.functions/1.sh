@@ -2,23 +2,21 @@
 E_ILLEGAL_CALL=255
 
 Max() {
-  FILE_PATH="$1"
-
 	if [ -z "$1" ] || [ ! -e "$1" ]; then
-	  echo "Couldn't get the necessary data"
+	  CHECK="fail"
 	  return ${E_ILLEGAL_CALL}
   fi
-  LENGTH="$(wc -l < ${FILE_PATH})"
+  LENGTH="$(wc -l < $1)"
 #  FILE_NAME="$(basename ${FILE_PATH})"
 #  echo "File ${FILE_NAME} has ${LENGTH} strings"
-  return ${LENGTH}
 }
 
 # Пример вызова функции
 #Max
 #echo "Return code is $?"
-#
+
 #Max materials/01_functions.sh
+#echo $LENGTH
 #echo "Return code is $?"
 #
 #Max non_existing_file.txt
