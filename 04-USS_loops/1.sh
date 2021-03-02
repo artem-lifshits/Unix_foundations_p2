@@ -1,5 +1,8 @@
 #!/bin/bash
 
+V_ABBR=( d f t )
+V_FULL=(default failed timedout)
+
 while [[ $# -gt 1 ]]; do
 	case "$1" in
 		"-s")

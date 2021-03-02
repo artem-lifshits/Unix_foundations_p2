@@ -8,7 +8,7 @@ JOBS=3
 while [ -n "$1" ]; do
 	case $1 in
 		"-t")
-			if ! [[ $2 =~ $NUMBER ]] ; then
+			if ! (( $2 > 0 )) ; then
    				echo "Input is not a number"
 				  exit 1
 			elif [ $2 -le 0 ]; then
@@ -21,7 +21,7 @@ while [ -n "$1" ]; do
 			shift
 			;;
 		"-j")
-			if ! [[ $2 =~ $NUMBER ]] ; then
+			if ! (( $2 > 0 )) ; then
             echo "Input is not a number"
             exit 1
       elif [ $2 -le 0 ]; then

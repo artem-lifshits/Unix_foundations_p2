@@ -20,8 +20,8 @@ done
 ls ${DIR2}/*config > /dev/null
 
 if [ "$?" -eq 1 ]; then
-  echo "Error: no user-specifig config files found"
-  exit 1
+  echo "INFO: no user-specifig config files found"
+  exit 0
 fi
 
 shopt -s dotglob
