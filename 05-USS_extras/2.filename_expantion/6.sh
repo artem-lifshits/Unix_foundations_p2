@@ -17,14 +17,14 @@ for V_FILE in ${DIR}/*.config; do
   source ${V_FILE}
 done
 
-ls ${DIR2}/*config > /dev/null
+shopt -u failglob
+shopt -s nullglob
 
-if [ "$?" -eq 1 ]; then
+if [ ! -n "$(echo ${DIR2}/*config)" ]; then
   echo "INFO: no user-specifig config files found"
   exit 0
 fi
 
-shopt -s dotglob
 for V_FILE in ${DIR2}/*.config; do
   FILE_NAME="$(basename ${V_FILE})"
   echo "Applying user-specific config: ${FILE_NAME}"
