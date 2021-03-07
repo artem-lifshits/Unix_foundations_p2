@@ -5,7 +5,6 @@ REV=0
 INT=false
 MIN=''
 MAX=''
-ARRAY=()
 
 check_int(){
   if [ "$1" == "-r" ] || [ "$1" == "--rev" ]; then
